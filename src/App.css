@@ -45,7 +45,7 @@
 
 .form .form-item__item.select {
   border: 1px solid black;
-  padding: 8px 0;
+  padding: 8px 5px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;

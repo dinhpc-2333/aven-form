@@ -30,7 +30,6 @@ class Form extends Component {
     this.changeRadioFormValueHandler = this.changeRadioFormValueHandler.bind(
       this
     );
-    this.resetSubmitHandler = this.resetSubmitHandler.bind(this);
     this.setEmailError = this.setEmailError.bind(this);
     this.setNameError = this.setNameError.bind(this);
   }
@@ -64,8 +63,6 @@ class Form extends Component {
     this.setState({
       [target]: value,
     });
-
-    this.resetSubmitHandler();
   }
 
   changeCheckboxFormValueHandler(e) {
@@ -82,8 +79,6 @@ class Form extends Component {
         ),
       });
     }
-
-    this.resetSubmitHandler();
   }
 
   changeRadioFormValueHandler(e) {
@@ -91,8 +86,6 @@ class Form extends Component {
     const stateName = e.target.name;
 
     this.setState({ [stateName]: target });
-
-    this.resetSubmitHandler();
   }
 
   onFormSubmit(e) {
@@ -131,14 +124,6 @@ class Form extends Component {
       this.setState({ nameError: "Please enter your name" });
     } else {
       this.setState({ nameError: "" });
-    }
-  }
-
-  resetSubmitHandler() {
-    const { isSubmit } = this.state;
-
-    if (isSubmit) {
-      this.setState({ isSubmit: false, ...initUserInfo });
     }
   }
 
