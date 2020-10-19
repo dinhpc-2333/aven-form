@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { mappingLabel } from "../../constants";
 
 const Label = ({ label, required }) => {
@@ -7,9 +7,9 @@ const Label = ({ label, required }) => {
       htmlFor={label}
       className={`form-item__label ${required ? "required" : ""}`}
     >
-      {mappingLabel[label]}
+      {mappingLabel[label] || label}
     </label>
   );
 };
 
-export default Label;
+export default memo(Label);

@@ -1,11 +1,20 @@
-import React, { Component } from "react";
-import Form from "./components/Form";
+import React from "react";
+import { Switch, Route } from "react-router-dom";
+import Form from "./pages/Form";
+import Result from "./pages/Result";
 
 import "./App.css";
-class App extends Component {
-  render() {
-    return <Form />;
-  }
-}
+const App = () => {
+  return (
+    <Switch>
+      <Route path="/result">
+        <Result />
+      </Route>
+      <Route exact path="/">
+        <Form />
+      </Route>
+    </Switch>
+  );
+};
 
 export default App;

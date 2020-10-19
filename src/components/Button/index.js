@@ -1,14 +1,11 @@
-import React, { PureComponent } from "react";
+import React, { memo } from "react";
 
-class Button extends PureComponent {
-  render() {
-    const { children, onClick, type } = this.props;
-    return (
-      <button onClick={onClick} type={type} className="button">
-        {children}
-      </button>
-    );
-  }
-}
+const Button = ({ children, onClick, type }) => {
+  return (
+    <button onClick={onClick} type={type} className="button">
+      {children}
+    </button>
+  );
+};
 
-export default Button;
+export default memo(Button);
