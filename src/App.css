@@ -83,3 +83,15 @@
 .button:focus {
   background-color: #fc653c;
 }
+
+.result-wrapper {
+  max-width: 500px;
+  margin: auto;
+  text-align: center;
+}
+
+.result {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}

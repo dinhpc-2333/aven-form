@@ -4,6 +4,8 @@ export const mappingLabel = {
   dob: "Date of birth",
   language: "Language",
   bio: "Bio",
+  gender: "Gender",
+  jobs: "Job",
 };
 
 export const language = [
