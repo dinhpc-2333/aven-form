@@ -4,12 +4,13 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Button from "../../components/Button";
 
-import * as actions from "../../store/form/action";
+import * as actions from "../../store/form/actions";
 import { mappingLabel } from "../../constants";
+import Layout from "../../components/Layout";
 
 const Result = () => {
   const dispatch = useDispatch();
-  const formState = useSelector((store) => store);
+  const formState = useSelector((store) => store.form.formState);
   const history = useHistory();
 
   const goBackForm = () => {
@@ -18,28 +19,31 @@ const Result = () => {
   };
 
   return (
-    <div className="result-wrapper">
+    <Layout>
       <h1>Result</h1>
-      <ul>
-        {Object.keys(formState).map((key, i) => {
-          const value = formState[key];
-          if (!value || (Array.isArray(value) && value.length < 1)) return null;
+      <div className="result-wrapper">
+        <ul>
+          {Object.keys(formState).map((key, i) => {
+            const value = formState[key];
+            if (!value || (Array.isArray(value) && value.length < 1))
+              return null;
 
-          return (
-            <li key={i} className="result">
-              <span>{mappingLabel[key]}</span>
-              {Array.isArray(value) ? (
-                <span>{value.join(", ")}</span>
-              ) : (
-                <span>{value}</span>
-              )}
-            </li>
-          );
-        })}
-      </ul>
+            return (
+              <li key={i} className="result">
+                <span>{mappingLabel[key]}</span>
+                {Array.isArray(value) ? (
+                  <span>{value.join(", ")}</span>
+                ) : (
+                  <span>{value}</span>
+                )}
+              </li>
+            );
+          })}
+        </ul>
 
-      <Button onClick={goBackForm}>Go back</Button>
-    </div>
+        <Button onClick={goBackForm}>Go back homepage</Button>
+      </div>
+    </Layout>
   );
 };
 

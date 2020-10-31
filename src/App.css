@@ -95,3 +95,15 @@
   justify-content: space-between;
   margin-bottom: 20px;
 }
+
+.layout {
+  padding: 24px;
+}
+
+.nav {
+  display: flex;
+}
+
+.nav-item {
+  margin-right: 10px;
+}

@@ -4,14 +4,19 @@ import Form from "./pages/Form";
 import Result from "./pages/Result";
 
 import "./App.css";
+import Home from "./pages/Home";
 const App = () => {
   return (
     <Switch>
       <Route path="/result">
         <Result />
       </Route>
-      <Route exact path="/">
+      <Route path="/info-form">
         <Form />
+      </Route>
+
+      <Route exact path="/">
+        <Home />
       </Route>
     </Switch>
   );
