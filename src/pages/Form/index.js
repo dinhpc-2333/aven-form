@@ -1,11 +1,6 @@
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  useReducer,
-  useCallback,
-} from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import Input from "../../components/Input";
 import Select from "../../components/Select";
 import Textarea from "../../components/Textarea";
@@ -13,13 +8,12 @@ import Checkbox from "../../components/Checkbox";
 import Radio from "../../components/Radio";
 import Button from "../../components/Button";
 
-import { reducer, initReducer } from "../../store/form/reducer";
 import * as actions from "../../store/form/action";
-import { initUserInfo } from "../../constants";
 
 const Form = () => {
-  const [formState, dispatch] = useReducer(reducer, initUserInfo, initReducer);
   let history = useHistory();
+  const dispatch = useDispatch();
+  const formState = useSelector((store) => store);
   const [emailError, setEmailError] = useState("");
   const [nameError, setNameError] = useState("");
 
@@ -30,44 +24,53 @@ const Form = () => {
     nameRef.current.focus();
   }, []);
 
-  const changeFormValueHandler = useCallback((e) => {
-    const target = e.target.id;
-    const value = e.target.value;
+  const changeFormValueHandler = useCallback(
+    (e) => {
+      const target = e.target.id;
+      const value = e.target.value;
 
-    if (target === "name" && value) {
-      handleNameError();
-    }
+      if (target === "name" && value) {
+        handleNameError();
+      }
 
-    if (target === "name" && !value) {
-      handleNameError(true);
-    }
+      if (target === "name" && !value) {
+        handleNameError(true);
+      }
 
-    if (target === "email" && value) {
-      handleEmailError();
-    }
+      if (target === "email" && value) {
+        handleEmailError();
+      }
 
-    if (target === "email" && !value) {
-      handleEmailError(true);
-    }
-    dispatch(actions.setCommonField({ [target]: value }));
-  }, []);
+      if (target === "email" && !value) {
+        handleEmailError(true);
+      }
+      dispatch(actions.setCommonField({ [target]: value }));
+    },
+    [dispatch]
+  );
 
-  const changeCheckboxFormValueHandler = useCallback((e) => {
-    const target = e.target.id;
-    const isChecked = e.target.checked;
+  const changeCheckboxFormValueHandler = useCallback(
+    (e) => {
+      const target = e.target.id;
+      const isChecked = e.target.checked;
 
-    if (isChecked) {
-      dispatch(actions.addJob(target));
-    } else {
-      dispatch(actions.removeJob(target));
-    }
-  }, []);
+      if (isChecked) {
+        dispatch(actions.addJob(target));
+      } else {
+        dispatch(actions.removeJob(target));
+      }
+    },
+    [dispatch]
+  );
 
-  const changeRadioFormValueHandler = useCallback((e) => {
-    const target = e.target.id;
-    const stateName = e.target.name;
-    dispatch(actions.setCommonField({ [stateName]: target }));
-  }, []);
+  const changeRadioFormValueHandler = useCallback(
+    (e) => {
+      const target = e.target.id;
+      const stateName = e.target.name;
+      dispatch(actions.setCommonField({ [stateName]: target }));
+    },
+    [dispatch]
+  );
 
   const onFormSubmit = useCallback(
     (e) => {
@@ -85,8 +88,7 @@ const Form = () => {
       }
 
       if (email && name) {
-        console.log(formState);
-        history.push({ pathname: "/result", state: formState });
+        history.push({ pathname: "/result" });
       }
     },
     [formState, history]

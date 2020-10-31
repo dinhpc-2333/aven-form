@@ -1,10 +1,9 @@
+import { initUserInfo } from "../../constants";
 import * as types from "./types";
 
-const initReducer = (initState) => {
-  return initState;
-};
+const INITIAL_STATE = initUserInfo;
 
-const reducer = (state, action) => {
+const formReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.SET_COMMON_FIELD:
       return { ...state, ...action.payload };
@@ -17,10 +16,11 @@ const reducer = (state, action) => {
       return { ...state, jobs: newJobs };
 
     case types.RESET_FORM:
-      return initReducer(action.payload);
+      return { ...state, ...initUserInfo };
+
     default:
-      throw new Error();
+      return state;
   }
 };
 
-export { reducer, initReducer };
+export default formReducer;

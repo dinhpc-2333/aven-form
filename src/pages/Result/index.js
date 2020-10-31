@@ -1,16 +1,19 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
 import Button from "../../components/Button";
 
+import * as actions from "../../store/form/action";
 import { mappingLabel } from "../../constants";
 
 const Result = () => {
+  const dispatch = useDispatch();
+  const formState = useSelector((store) => store);
   const history = useHistory();
-  const {
-    location: { state },
-  } = history;
 
   const goBackForm = () => {
+    dispatch(actions.resetForm());
     history.push("/");
   };
 
@@ -18,8 +21,8 @@ const Result = () => {
     <div className="result-wrapper">
       <h1>Result</h1>
       <ul>
-        {Object.keys(state).map((key, i) => {
-          const value = state[key];
+        {Object.keys(formState).map((key, i) => {
+          const value = formState[key];
           if (!value || (Array.isArray(value) && value.length < 1)) return null;
 
           return (
