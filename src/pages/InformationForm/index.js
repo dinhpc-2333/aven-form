@@ -186,7 +186,7 @@ const Form = () => {
           </Checkbox>
         </div>
         <div className="form-item">
-          <p className="form-item__label">Gender</p>
+          <p className="form-item__label radio">Gender</p>
           <Radio
             label="male"
             name="gender"

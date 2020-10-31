@@ -18,6 +18,10 @@
   margin-bottom: 10px;
 }
 
+.form .form-item__label.radio {
+  width: 100%;
+}
+
 .form .form-item__label.required::after {
   position: absolute;
   top: 0;
