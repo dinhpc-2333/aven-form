@@ -7,26 +7,20 @@ import Input from "../../components/Input";
 import Checkbox from "../../components/Checkbox";
 import Radio from "../../components/Radio";
 import Button from "../../components/Button";
+import Textarea from "../../components/Textarea";
 
-import * as actions from "../../store/marriage-form/actions";
+import * as actions from "../../store/form/actions";
 
 const MarriageForm = () => {
   let history = useHistory();
   const dispatch = useDispatch();
-  const marriageFormData = useSelector(
-    (store) => store.marriageForm.marriageFormData
-  );
-  const marriageFormState = useSelector(
-    (store) => store.marriageForm.marriageFormState
-  );
+  const formState = useSelector((store) => store.form.marriageFormState);
+
+  const marriageFormData = useSelector((store) => store.form.marriageFormData);
+
   const marriageFormLoading = useSelector(
-    (store) => store.marriageForm.marriageFormLoading
+    (store) => store.form.marriageFormLoading
   );
-  useEffect(() => {
-    if (!marriageFormData) {
-      dispatch(actions.fetchMarriageFormStart());
-    }
-  }, [dispatch, marriageFormData]);
 
   const getFields = useMemo(() => {
     if (marriageFormData) {
@@ -41,25 +35,46 @@ const MarriageForm = () => {
     }
   }, [marriageFormData]);
 
+  useEffect(() => {
+    if (!marriageFormData) {
+      dispatch(actions.fetchMarriageFormStart());
+    }
+  }, [dispatch, marriageFormData]);
+
   const changeFormValueHandler = useCallback(
     (e) => {
       const target = e.target.id;
       const value = e.target.value;
-
-      dispatch(actions.setCommonField({ [target]: value }));
+      dispatch(
+        actions.setCommonField({
+          data: { [target]: value },
+          state: "marriageFormState",
+        })
+      );
     },
     [dispatch]
   );
 
   const changeCheckboxFormValueHandler = useCallback(
     (e) => {
-      const target = e.target.id;
+      const value = e.target.id;
       const isChecked = e.target.checked;
+      const name = e.target.name;
 
       if (isChecked) {
-        dispatch(actions.addCheckboxValue(target));
+        dispatch(
+          actions.addCheckboxValue({
+            data: { name, value },
+            state: "marriageFormState",
+          })
+        );
       } else {
-        dispatch(actions.removeCheckboxValue(target));
+        dispatch(
+          actions.removeCheckboxValue({
+            data: { name, value },
+            state: "marriageFormState",
+          })
+        );
       }
     },
     [dispatch]
@@ -69,7 +84,14 @@ const MarriageForm = () => {
     (e) => {
       const target = e.target.id;
       const stateName = e.target.name;
-      dispatch(actions.setCommonField({ [stateName]: target }));
+      dispatch(
+        actions.setCommonField({
+          data: {
+            [stateName]: target,
+          },
+          state: "marriageFormState",
+        })
+      );
     },
     [dispatch]
   );
@@ -77,18 +99,16 @@ const MarriageForm = () => {
   const onFormSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      history.push({ pathname: "/result" });
+      history.push({ pathname: "/result", state: "marriage-form" });
     },
-    [marriageFormState, history]
+    [history]
   );
-
-  console.log(getFields);
 
   return (
     <Layout>
       <h1>Marriage Form</h1>
 
-      {marriageFormLoading ? (
+      {marriageFormLoading || !formState ? (
         <p>Loading ...</p>
       ) : (
         <form className="form">
@@ -104,10 +124,10 @@ const MarriageForm = () => {
                     <Input
                       placeholder="Your answer"
                       label={fieldData.description}
-                      value={marriageFormState[fieldData.name]}
+                      value={formState[fieldData.name]}
                       onChange={changeFormValueHandler}
                       type="text"
-                      required={true}
+                      id={fieldData.name}
                     />
                   </div>
                 );
@@ -120,7 +140,7 @@ const MarriageForm = () => {
                       <Checkbox
                         label={checkboxField}
                         onChange={changeCheckboxFormValueHandler}
-                        value={marriageFormState[fieldData.name].includes(
+                        value={formState[fieldData.name]?.includes(
                           checkboxField
                         )}
                         name={fieldData.name}
@@ -141,8 +161,8 @@ const MarriageForm = () => {
                     {fieldData.fields.map((radioField) => (
                       <Radio
                         label={radioField}
-                        name={radioField}
-                        value={marriageFormState[fieldData.name]}
+                        name={fieldData.name}
+                        value={formState[fieldData.name]}
                         onChange={changeRadioFormValueHandler}
                         key={radioField}
                       >
@@ -158,9 +178,24 @@ const MarriageForm = () => {
                     <Input
                       placeholder="yyyy-mm-dd"
                       label={fieldData.description}
-                      value={marriageFormState[fieldData.name]}
+                      value={formState[fieldData.name]}
                       onChange={changeFormValueHandler}
                       type="date"
+                      id={fieldData.name}
+                    />
+                  </div>
+                );
+
+              case "textarea":
+                return (
+                  <div className="form-item" key={fieldData.id}>
+                    <Textarea
+                      label={fieldData.description}
+                      placeholder="Your answer"
+                      value={formState[fieldData.name]}
+                      onChange={changeFormValueHandler}
+                      row={6}
+                      id={fieldData.name}
                     />
                   </div>
                 );

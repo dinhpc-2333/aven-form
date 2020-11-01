@@ -7,16 +7,16 @@ export const setCommonField = (payload) => {
   };
 };
 
-export const addJob = (payload) => {
+export const addCheckboxValue = (payload) => {
   return {
-    type: types.ADD_JOB,
+    type: types.ADD_CHECKBOX_VALUE,
     payload,
   };
 };
 
-export const removeJob = (payload) => {
+export const removeCheckboxValue = (payload) => {
   return {
-    type: types.REMOVE_JOB,
+    type: types.REMOVE_CHECKBOX_VALUE,
     payload,
   };
 };
@@ -25,5 +25,25 @@ export const resetForm = (payload) => {
   return {
     type: types.RESET_FORM,
     payload,
+  };
+};
+
+export const fetchMarriageFormStart = () => {
+  return {
+    type: types.FETCH_MARRIAGE_FORM.START,
+  };
+};
+
+export const fetchMarriageFormSuccess = (payload) => {
+  return {
+    type: types.FETCH_MARRIAGE_FORM.SUCCESS,
+    payload,
+  };
+};
+
+export const fetchMarriageFormFailure = (error) => {
+  return {
+    type: types.FETCH_MARRIAGE_FORM.START,
+    payload: error,
   };
 };

@@ -1,13 +1,12 @@
 import React, { memo } from "react";
 import Label from "../Label";
 
-const Textarea = ({ label, row, placeholder, value, onChange }) => {
-
+const Textarea = ({ label, id, row, placeholder, value, onChange }) => {
   return (
     <>
-      <Label label={label} />
+      <Label id={id} label={label} />
       <textarea
-        id={label}
+        id={id}
         rows={row}
         placeholder={placeholder}
         value={value}

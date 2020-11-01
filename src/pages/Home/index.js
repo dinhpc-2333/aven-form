@@ -24,7 +24,7 @@ const Home = () => {
           <ul>
             {users.map((user) => (
               <li key={user.id}>
-                <img src={user.avatar} />
+                <img src={user.avatar} alt={user.name} />
                 <p>{user.name}</p>
               </li>
             ))}

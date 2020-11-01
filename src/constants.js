@@ -6,6 +6,12 @@ export const mappingLabel = {
   bio: "Bio",
   gender: "Gender",
   jobs: "Job",
+  branch: "branch",
+  full_name: "Full name",
+  plans: "Plans",
+  estimated_date: "Estimated date",
+  returned_date: "Return date",
+  notes: "Notes",
 };
 
 export const language = [

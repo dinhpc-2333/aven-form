@@ -1,10 +1,10 @@
 import React, { memo } from "react";
 import { mappingLabel } from "../../constants";
 
-const Label = ({ label, required }) => {
+const Label = ({ label, id, required }) => {
   return (
     <label
-      htmlFor={label}
+      htmlFor={id}
       className={`form-item__label ${required ? "required" : ""}`}
     >
       {mappingLabel[label] || label}

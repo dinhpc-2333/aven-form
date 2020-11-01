@@ -3,6 +3,7 @@ import Label from "../Label";
 
 const InnerInput = ({
   label,
+  id,
   type,
   placeholder,
   value,
@@ -13,10 +14,10 @@ const InnerInput = ({
 }) => {
   return (
     <>
-      <Label label={label} required={required} />
+      <Label id={id} label={label} required={required} />
       <input
         type={type}
-        id={label}
+        id={id}
         placeholder={placeholder}
         value={value}
         onChange={onChange}

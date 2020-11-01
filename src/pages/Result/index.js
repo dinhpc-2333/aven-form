@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -11,7 +11,22 @@ import Layout from "../../components/Layout";
 const Result = () => {
   const dispatch = useDispatch();
   const formState = useSelector((store) => store.form.formState);
+  const marriageFormState = useSelector(
+    (store) => store.form.marriageFormState
+  );
   const history = useHistory();
+
+  const {
+    location: { state },
+  } = history;
+
+  const currentState = state === "form" ? formState : marriageFormState;
+
+  useEffect(() => {
+    if (!state || !currentState) {
+      history.replace("/");
+    }
+  }, [state, history, currentState]);
 
   const goBackForm = () => {
     dispatch(actions.resetForm());
@@ -22,24 +37,26 @@ const Result = () => {
     <Layout>
       <h1>Result</h1>
       <div className="result-wrapper">
-        <ul>
-          {Object.keys(formState).map((key, i) => {
-            const value = formState[key];
-            if (!value || (Array.isArray(value) && value.length < 1))
-              return null;
+        {currentState && (
+          <ul>
+            {Object.keys(currentState).map((key, i) => {
+              const value = currentState[key];
+              if (!value || (Array.isArray(value) && value.length < 1))
+                return null;
 
-            return (
-              <li key={i} className="result">
-                <span>{mappingLabel[key]}</span>
-                {Array.isArray(value) ? (
-                  <span>{value.join(", ")}</span>
-                ) : (
-                  <span>{value}</span>
-                )}
-              </li>
-            );
-          })}
-        </ul>
+              return (
+                <li key={i} className="result">
+                  <span>{mappingLabel[key]}</span>
+                  {Array.isArray(value) ? (
+                    <span>{value.join(", ")}</span>
+                  ) : (
+                    <span>{value}</span>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        )}
 
         <Button onClick={goBackForm}>Go back homepage</Button>
       </div>
